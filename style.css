@@ -1,127 +1,96 @@
-font-size: 44px;
-    }
+/* =========================================================
+   AMERAY MUSIC
+   Full d'estils principal
+   ========================================================= */
 
 
-    .featured-image {
-        min-height: 350px;
-    }
+/* =========================================================
+   VARIABLES
+   ========================================================= */
 
+:root {
+    --black: #0a0a0a;
+    --black-soft: #111111;
+    --dark: #171717;
+    --white: #ffffff;
+    --off-white: #f5f5f2;
+    --grey-light: #d8d8d4;
+    --grey: #999999;
+    --grey-dark: #666666;
+    --border: #292929;
 
-    .featured-content {
-        padding: 30px 25px;
-    }
+    --accent: #d9ff00;
 
+    --max-width: 1240px;
 
-    .featured-content h3 {
-        font-size: 36px;
-    }
-
-
-    .featured-footer {
-        align-items: flex-start;
-
-        flex-direction: column;
-
-        gap: 15px;
-    }
-
-
-    .article-image {
-        height: 250px;
-    }
-
-
-    .agenda-item {
-        min-height: 115px;
-
-        grid-template-columns:
-            65px
-            1fr
-            20px;
-    }
-
-
-    .agenda-info h3 {
-        font-size: 19px;
-    }
-
-
-    .agenda-arrow {
-        font-size: 18px;
-    }
-
-
-    .festival-banner {
-        padding: 30px;
-    }
-
-
-    .festival-banner h3 {
-        font-size: 45px;
-
-        letter-spacing: -2px;
-    }
-
-
-    .about-title h2,
-    .contact-section h2 {
-        font-size: 46px;
-
-        letter-spacing: -2.5px;
-    }
-
-
-    .contact-email {
-        font-size: 17px;
-    }
-
-
-    .footer-main {
-        padding-top: 55px;
-        padding-bottom: 45px;
-
-        grid-template-columns: 1fr;
-    }
-
-
-    .footer-brand-area {
-        grid-column: auto;
-    }
-
-
-    .footer-column:last-child {
-        grid-column: auto;
-    }
-
-
-    .footer-bottom {
-        align-items: flex-start;
-
-        flex-direction: column;
-
-        justify-content: center;
-
-        padding-top: 18px;
-        padding-bottom: 18px;
-    }
-
+    --transition: 0.25s ease;
 }
 
 
 /* =========================================================
-   CONTROLS DE CONTINGUT
+   RESET
    ========================================================= */
 
-/* Les cròniques amb aquesta classe es mostren en prémer «Carregar més». */
-.hidden-card {
-    display: none !important;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: var(--off-white);
+    color: var(--black);
+
+    line-height: 1.6;
+
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+
+img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+button {
+    font: inherit;
+}
+
+
+.wrap {
+    width: min(
+        calc(100% - 48px),
+        var(--max-width)
+    );
+
+    margin: 0 auto;
 }
 
 
 /* =========================================================
-   ACCESIBILIDAD
+   CABECERA
    ========================================================= */
 
-a:focus-visible,
-button:focus-visible {
-    outline: 3px solid var(--accent);
+.site-header {
+    position: sticky;
+    top: 0;
