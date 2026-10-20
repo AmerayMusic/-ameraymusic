@@ -1,127 +1,166 @@
-font-size: 44px;
+// ============================================================
+// AmerayMusic — Interaccions de la pàgina principal
+// ============================================================
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    // --------------------------------------------------------
+    // 1. MENÚ DE NAVEGACIÓ MÒBIL
+    // --------------------------------------------------------
+
+    const navToggle = document.getElementById('nav-toggle');
+    const mainNav = document.getElementById('main-nav');
+
+    if (navToggle && mainNav) {
+
+        // Obrir i tancar el menú
+        navToggle.addEventListener('click', () => {
+
+            const isOpen = mainNav.classList.toggle('open');
+
+            navToggle.setAttribute(
+                'aria-expanded',
+                isOpen ? 'true' : 'false'
+            );
+
+            navToggle.setAttribute(
+                'aria-label',
+                isOpen ? 'Tancar menú' : 'Obrir menú'
+            );
+
+        });
+
+        // Tancar el menú quan es selecciona un enllaç
+        mainNav.querySelectorAll('a').forEach(link => {
+
+            link.addEventListener('click', () => {
+
+                mainNav.classList.remove('open');
+
+                navToggle.setAttribute('aria-expanded', 'false');
+                navToggle.setAttribute('aria-label', 'Obrir menú');
+
+            });
+
+        });
+
+        // Tancar el menú amb la tecla Escape
+        document.addEventListener('keydown', event => {
+
+            if (event.key === 'Escape') {
+
+                mainNav.classList.remove('open');
+
+                navToggle.setAttribute('aria-expanded', 'false');
+                navToggle.setAttribute('aria-label', 'Obrir menú');
+
+            }
+
+        });
+
     }
 
 
-    .featured-image {
-        min-height: 350px;
+    // --------------------------------------------------------
+    // 2. BOTÓ «CARREGAR MÉS»
+    // --------------------------------------------------------
+
+    const loadMoreBtn = document.getElementById('load-more');
+
+    if (loadMoreBtn) {
+
+        loadMoreBtn.addEventListener('click', () => {
+
+            const hiddenCards = document.querySelectorAll('.hidden-card');
+
+            hiddenCards.forEach(card => {
+                card.classList.remove('hidden-card');
+            });
+
+            loadMoreBtn.hidden = true;
+
+        });
+
     }
 
 
-    .featured-content {
-        padding: 30px 25px;
+    // --------------------------------------------------------
+    // 3. ANY AUTOMÀTIC AL PEU DE PÀGINA
+    // --------------------------------------------------------
+
+    const yearElement = document.getElementById('year');
+
+    if (yearElement) {
+
+        yearElement.textContent = new Date().getFullYear();
+
     }
 
 
-    .featured-content h3 {
-        font-size: 36px;
+    // --------------------------------------------------------
+    // 4. NAVEGACIÓ AMB ÀNCORA
+    // --------------------------------------------------------
+
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+
+        link.addEventListener('click', event => {
+
+            const targetId = link.getAttribute('href');
+
+            // Ignorar enllaços buits com href="#"
+            if (!targetId || targetId === '#') {
+                return;
+            }
+
+            const targetElement = document.querySelector(targetId);
+
+            if (targetElement) {
+
+                event.preventDefault();
+
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+
+                // Actualitzar l'adreça sense recarregar la pàgina
+                history.replaceState(null, '', targetId);
+
+            }
+
+        });
+
+    });
+
+
+    // --------------------------------------------------------
+    // 5. TANCAR EL MENÚ EN CANVIAR A PANTALLA GRAN
+    // --------------------------------------------------------
+
+    const desktopBreakpoint = window.matchMedia('(min-width: 769px)');
+
+    const resetMobileMenu = event => {
+
+        if (event.matches && mainNav && navToggle) {
+
+            mainNav.classList.remove('open');
+
+            navToggle.setAttribute('aria-expanded', 'false');
+            navToggle.setAttribute('aria-label', 'Obrir menú');
+
+        }
+
+    };
+
+    if (desktopBreakpoint.addEventListener) {
+
+        desktopBreakpoint.addEventListener('change', resetMobileMenu);
+
+    } else {
+
+        // Compatibilitat amb navegadors antics
+        desktopBreakpoint.addListener(resetMobileMenu);
+
     }
 
-
-    .featured-footer {
-        align-items: flex-start;
-
-        flex-direction: column;
-
-        gap: 15px;
-    }
-
-
-    .article-image {
-        height: 250px;
-    }
-
-
-    .agenda-item {
-        min-height: 115px;
-
-        grid-template-columns:
-            65px
-            1fr
-            20px;
-    }
-
-
-    .agenda-info h3 {
-        font-size: 19px;
-    }
-
-
-    .agenda-arrow {
-        font-size: 18px;
-    }
-
-
-    .festival-banner {
-        padding: 30px;
-    }
-
-
-    .festival-banner h3 {
-        font-size: 45px;
-
-        letter-spacing: -2px;
-    }
-
-
-    .about-title h2,
-    .contact-section h2 {
-        font-size: 46px;
-
-        letter-spacing: -2.5px;
-    }
-
-
-    .contact-email {
-        font-size: 17px;
-    }
-
-
-    .footer-main {
-        padding-top: 55px;
-        padding-bottom: 45px;
-
-        grid-template-columns: 1fr;
-    }
-
-
-    .footer-brand-area {
-        grid-column: auto;
-    }
-
-
-    .footer-column:last-child {
-        grid-column: auto;
-    }
-
-
-    .footer-bottom {
-        align-items: flex-start;
-
-        flex-direction: column;
-
-        justify-content: center;
-
-        padding-top: 18px;
-        padding-bottom: 18px;
-    }
-
-}
-
-
-/* =========================================================
-   CONTROLS DE CONTINGUT
-   ========================================================= */
-
-/* Les cròniques amb aquesta classe es mostren en prémer «Carregar més». */
-.hidden-card {
-    display: none !important;
-}
-
-
-/* =========================================================
-   ACCESIBILIDAD
-   ========================================================= */
-
-a:focus-visible,
-button:focus-visible {
-    outline: 3px solid var(--accent);
+});
